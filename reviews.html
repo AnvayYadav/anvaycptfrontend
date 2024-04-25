@@ -4,7 +4,6 @@ permalink: /review/
 title: Reviews
 ---
 
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,11 +11,22 @@ title: Reviews
     <title>Job Finder Reviews</title>
     <style>
         /* Your CSS styles for the review section */
-    </style>
-</head>
-<body>
+        .search-input {
+            padding: 3px;
+            width: 60%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+  </style>
+  </head>
+  <body>
     <h1>Job Finder Reviews</h1>
-    
+
+    <div class="search-container">
+      <input type="text" id="search-input" class="search-input" placeholder="Search Jobly's reviews here!">
+      <button onclick="searchReviews()">Search</button>
+    </div>
+
     <div id="review-form">
         <h2>Leave a Review</h2>
         <select id="rating">
@@ -26,7 +36,7 @@ title: Reviews
             <option value="4">4 Stars</option>
             <option value="5">5 Stars</option>
         </select>
-        <textarea id="comment" placeholder="Write your review here..."></textarea>
+        <textarea id="comment" placeholder="Write your review for Jobly here!"></textarea>
         <button id="submit-review-btn" onclick="submitApplication()">Submit Review</button>
     </div>
     
@@ -75,81 +85,80 @@ title: Reviews
               });
           });
       });
-  </script>
 
-
-    <script>
-        function submitApplication() {
-        function getCookie(cname) {
-            var name = cname + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);
-            var ca = decodedCookie.split(';');
-            for(var i = 0; i <ca.length; i++) {
-              var c = ca[i];
-              while (c.charAt(0) == ' ') {
-                c = c.substring(1);
+      function searchReviews() {
+          const searchTerm = $('#search-input').val().trim().toLowerCase();
+          const reviews = $('.review-box');
+          reviews.each(function() {
+              const reviewText = $(this).text().toLowerCase();
+              if (reviewText.indexOf(searchTerm) === -1) {
+                  $(this).hide();
+              } else {
+                  $(this).show();
               }
-              if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-              }
-            }
-            return "";
-          } 
-
-          comment = document.getElementById("comment").value;
-          console.log(comment)
-          rating = document.getElementById("rating").value;
-          console.log(rating)
-
-          const userData = {
-            comment: comment,
-            rating: rating
-          };
-    
-        const submitApplicationUrl = 'http://127.0.0.1:8064/api/review/';
-        const submitApplicationHeader = {
-          method: 'POST',
-          //mode: 'cors',
-          headers: { 'Content-Type': 'application/json'
-         /* 'Access-Control-Allow-Origin': 'http://127.0.0.1:4100/joblyFrontend', 
-          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-          'Access-Control-Allow-Credentials': 'true',*/
-        },
-
-          body: JSON.stringify(userData), // Convert data object to JSON string
-         
-      };
-        // fetch the API
-        fetch(submitApplicationUrl, submitApplicationHeader)
-        
-          .then(response => {
-            console.log(response)
-            // Error handling
-            if (response.status !== 200) {
-              const errorMsg = 'Database response error: ' + response.status;
-              console.log(errorMsg);
-      
-            }
-          })
-          .catch(err => {
-            // Error handling
-            console.error(err);
-         
           });
+      }
+
+    function submitApplication() {
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      } 
+
+      comment = document.getElementById("comment").value;
+      console.log(comment)
+      rating = document.getElementById("rating").value;
+      console.log(rating)
+
+      const userData = {
+        comment: comment,
+        rating: rating
+      };
+
+    const submitApplicationUrl = 'http://127.0.0.1:8064/api/review/';
+    const submitApplicationHeader = {
+      method: 'POST',
+      //mode: 'cors',
+      headers: { 'Content-Type': 'application/json'
+     /* 'Access-Control-Allow-Origin': 'http://127.0.0.1:4100/joblyFrontend', 
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'Access-Control-Allow-Credentials': 'true',*/
+    },
+
+      body: JSON.stringify(userData), // Convert data object to JSON string
+     
+  };
+    // fetch the API
+    fetch(submitApplicationUrl, submitApplicationHeader)
     
-        }    
-    </script>
+      .then(response => {
+        console.log(response)
+        // Error handling
+        if (response.status !== 200) {
+          const errorMsg = 'Database response error: ' + response.status;
+          console.log(errorMsg);
+  
+        }
+      })
+      .catch(err => {
+        // Error handling
+        console.error(err);
+     
+      });
+
+    }    
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
