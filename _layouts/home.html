@@ -80,7 +80,8 @@ layout: base
                     if (response.status !== 200) {
                         const errorMsg = 'Database response error: ' + response.status;
                         console.log(errorMsg);
-                        return;
+
+                        window.location.href = '{{site.baseurl}}/unsuccessfullogin'
                     }
                     console.log(response)
                     // Response contains valid result
@@ -88,7 +89,7 @@ layout: base
                         if (data !== null) {
                             console.log(data)
                             document.cookie = `userid=${data}; expires=Thu, 20 Jan 2025 00:00:00 UTC; path=/;`;
-                            window.location.href = '{{site.baseurl}}/jobs';
+                            window.location.href = '{{site.baseurl}}/profile';
                         }
                     });
                 })

@@ -153,10 +153,16 @@ table td {
     fetch(displayJobsUrl, displayJobsHeaders)
         .then(response => {
             if (response.status !== 200) {
-                // Handle error
+                const tr = document.createElement("tr");
+          const td = document.createElement("td");
+          td.innerHTML = errorMsg;
+          tr.appendChild(td);
+          resultContainer.appendChild(tr);
+      
                 return;
             }
             response.json().then(data => {
+                console.log(data)
                 data.forEach(row => {
                     const tr = document.createElement("tr");
                     tr.innerHTML = `
@@ -177,6 +183,12 @@ table td {
         })
         .catch(err => {
             console.error(err);
+           
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.innerHTML = err;
+        tr.appendChild(td);
+        resultContainer.appendChild(tr);
         });
 </script>
 </body>
